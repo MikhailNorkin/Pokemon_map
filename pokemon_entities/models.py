@@ -16,6 +16,11 @@ class PokemonEntity(models.Model):
     lon = models.CharField(max_length=10)
     appeared_date = models.DateTimeField()
     disappered_data = models.DateTimeField()
+    level = models.CharField(max_length=5)
+    health = models.CharField(max_length=5)
+    strength = models.CharField(max_length=5)
+    defence = models.CharField(max_length=5)
+    stamina = models.CharField(max_length=5)
 
     def __str__(self):
         return f'{self.title}'

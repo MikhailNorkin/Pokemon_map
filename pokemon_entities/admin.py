@@ -5,4 +5,4 @@ admin.site.register(Pokemon)
 
 @admin.register(PokemonEntity)
 class PokemonEntityAdmin(admin.ModelAdmin):
-    list_display = ('lat', 'lon', 'appeared_date', 'disappered_data')
+    list_display = ('lat', 'lon', 'appeared_date', 'disappered_data', 'level', 'health', 'strength', 'defence', 'stamina')
