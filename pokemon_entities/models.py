@@ -8,3 +8,11 @@ class Pokemon(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+    
+
+class PokemonEntity(models.Model):
+    lat = models.CharField(max_length=10)
+    lon = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f'{self.title}'
