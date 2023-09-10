@@ -71,13 +71,25 @@ def show_pokemon(request, pokemon_id):
         request.build_absolute_uri(requested_pokemon.pokemon.photo.url)
     )
 
+    with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
+        pokemons_json = json.load(database)['pokemons']
+    previous_evolution = {}    
+    for pokemon_json in pokemons_json:
+        if pokemon_json.get("previous_evolution") != None:           
+            previous_evolution[pokemon_json.get("title_ru")] = pokemon_json.get("previous_evolution")
+    try:
+        previous_evolution_pokemon = previous_evolution[requested_pokemon.pokemon.title_ru]
+    except KeyError:
+        previous_evolution_pokemon = None
+
     pokemons_on_page = {
         'pokemon_id': requested_pokemon.id,
         'title_ru': requested_pokemon.pokemon.title_ru,
         "title_en": requested_pokemon.pokemon.title_en,
         "title_jp": requested_pokemon.pokemon.title_jp,
         'img_url': requested_pokemon.pokemon.photo.url,
-        "description": requested_pokemon.pokemon.description
+        "description": requested_pokemon.pokemon.description,
+        "previous_evolution": previous_evolution_pokemon
     }
 
     return render(request, 'pokemon.html', context={
