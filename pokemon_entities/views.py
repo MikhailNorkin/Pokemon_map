@@ -71,17 +71,44 @@ def show_pokemon(request, pokemon_id):
         request.build_absolute_uri(requested_pokemon.pokemon.photo.url)
     )
 
-    with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
-        pokemons_json = json.load(database)['pokemons']
-    previous_evolution = {}    
-    for pokemon_json in pokemons_json:
-        if pokemon_json.get("previous_evolution") != None:           
-            previous_evolution[pokemon_json.get("title_ru")] = pokemon_json.get("previous_evolution")
-    try:
-        previous_evolution_pokemon = previous_evolution[requested_pokemon.pokemon.title_ru]
-    except KeyError:
-        previous_evolution_pokemon = None
+    previous_pokemon = requested_pokemon.pokemon.previous_evolution
+    previous_pokemon_dict = {}
+    if previous_pokemon != None:
+        previous_pokemon_dict = {
+            'title_ru': previous_pokemon.title_ru, 
+            'pokemon_id': previous_pokemon.id, 
+            'img_url': previous_pokemon.photo.url
+        }
 
+    # print(previous_pokemon.id)
+    # print(type(previous_pokemon))
+
+    # with open('pokemon_entities/pokemons.json', encoding='utf-8') as database:
+    #     pokemons_json = json.load(database)['pokemons']
+    # previous_evolution = {}    
+    # for pokemon_json in pokemons_json:
+    #     if pokemon_json.get("previous_evolution") != None:           
+    #         previous_evolution[pokemon_json.get("title_ru")] = pokemon_json.get("previous_evolution")
+    # try:
+    #     previous_evolution_pokemon = previous_evolution[requested_pokemon.pokemon.title_ru]
+    # except KeyError:
+    #     previous_evolution_pokemon = None
+    # print(previous_evolution_pokemon)
+    # for key in previous_evolution:
+    #     if previous_evolution[key]['title_ru'] == requested_pokemon.pokemon.title_ru:
+    #         next_evolution_pokemon_key = key
+    #         break
+    # else:
+    #     next_evolution_pokemon = None
+
+    # for pokemon_json in pokemons_json:
+    #     if pokemon_json.get("title_ru") == next_evolution_pokemon_key:
+    #         next_evolution_pokemon = pokemon_json
+    #         break      
+
+    # print("!!!")
+    # print(previous_evolution_pokemon)
+    # print(type(previous_evolution_pokemon))
     pokemons_on_page = {
         'pokemon_id': requested_pokemon.id,
         'title_ru': requested_pokemon.pokemon.title_ru,
@@ -89,7 +116,7 @@ def show_pokemon(request, pokemon_id):
         "title_jp": requested_pokemon.pokemon.title_jp,
         'img_url': requested_pokemon.pokemon.photo.url,
         "description": requested_pokemon.pokemon.description,
-        "previous_evolution": previous_evolution_pokemon
+        "previous_evolution": previous_pokemon_dict
     }
 
     return render(request, 'pokemon.html', context={
