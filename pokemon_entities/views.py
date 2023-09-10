@@ -17,8 +17,6 @@ DEFAULT_IMAGE_URL = (
 
 
 def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
-    print('&')
-    print(image_url)
     icon = folium.features.CustomIcon(
         image_url,
         icon_size=(50, 50),
@@ -42,9 +40,7 @@ def show_all_pokemons(request):
             pokemon_entity.lon,
             request.build_absolute_uri(pokemon_entity.pokemon.photo.url)
         )
-        print("!!!!!")
-        print(request.build_absolute_uri(pokemon_entity.pokemon.photo.url))
-
+        
     pokemons_on_page = []
     for pokemon_entity in pokemons:
         pokemons_on_page.append({
@@ -63,21 +59,26 @@ def show_pokemon(request, pokemon_id):
 
     pokemons = PokemonEntity.objects.filter(id=pokemon_id)
     for pokemon in pokemons:
-        if pokemon.id == int(pokemon_id):
-            requested_pokemon = pokemon
-            break
+        requested_pokemon = pokemon
+        break
     else:
         return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    print("!")
-    print(request.build_absolute_uri(requested_pokemon.pokemon.photo.url))
+    print(requested_pokemon.pokemon.title)
     add_pokemon(
         folium_map, requested_pokemon.lat,
         requested_pokemon.lon,
         request.build_absolute_uri(requested_pokemon.pokemon.photo.url)
     )
 
+    pokemons_on_page = {
+        'pokemon_id': requested_pokemon.id,
+        'title_ru': requested_pokemon.pokemon.title,
+        'img_url': requested_pokemon.pokemon.photo.url,
+        "description": requested_pokemon.pokemon.description
+    }
+
     return render(request, 'pokemon.html', context={
-        'map': folium_map._repr_html_(), 'pokemon': requested_pokemon
+        'map': folium_map._repr_html_(), 'pokemon': pokemons_on_page
     })
