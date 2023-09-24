@@ -19,7 +19,7 @@ class PokemonEntity(models.Model):
     lat = models.CharField(max_length=10, verbose_name="широта")
     lon = models.CharField(max_length=10, verbose_name="долгота")
     appeared_date = models.DateTimeField(verbose_name="дата появления")
-    disappered_data = models.DateTimeField(verbose_name="дата изчезновения")
+    disappered_data = models.DateTimeField(verbose_name="дата исчезновения")
     level = models.CharField(max_length=5, verbose_name="уровень")
     health = models.CharField(max_length=5, verbose_name="здоровье")
     strength = models.CharField(max_length=5, verbose_name="сила")
