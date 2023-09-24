@@ -10,7 +10,7 @@ class Pokemon(models.Model):
     photo = models.ImageField(upload_to='poks', verbose_name="фото:", null=True, blank=True)
     previous_evolution = models.ForeignKey("self", verbose_name="из кого родился", on_delete=models.CASCADE, related_name='poks', null=True, blank=True)
     def __str__(self):
-        return f'{self.title_ru}'
+        return self.title_ru
     
 
 class PokemonEntity(models.Model):
