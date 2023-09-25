@@ -14,7 +14,7 @@ class Pokemon(models.Model):
     
 
 class PokemonEntity(models.Model):
-    """Покемон."""
+    """Свойства покемона"""
     pokemon = models.ForeignKey(Pokemon,  verbose_name="покемон", on_delete=models.CASCADE, related_name='pokemons')
     lat = models.DecimalField(max_digits=10, decimal_places=7, verbose_name="широта")
     lon = models.DecimalField(max_digits=10, decimal_places=7, verbose_name="долгота")
