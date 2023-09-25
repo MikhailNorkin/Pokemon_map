@@ -70,12 +70,12 @@ def show_pokemon(request, pokemon_id):
     previous_pokemon_dict = {}
     if previous_pokemon:
         previous_pokemon_dict = {
-             'pokemon_id': previous_pokemon.id,
+            'pokemon_id': previous_pokemon.id,
             'title_ru': previous_pokemon.title_ru,  
             'img_url': previous_pokemon.photo.url
         }
 
-    next_pokemon = next(iter(requested_pokemon.pokemon.poks.all()))
+    next_pokemon = requested_pokemon.pokemon.poks.first()
    
     next_pokemon_dict = {}
     if next_pokemon:
