@@ -25,3 +25,5 @@ class PokemonEntity(models.Model):
     strength = models.PositiveSmallIntegerField(verbose_name="сила")
     defence = models.PositiveSmallIntegerField(verbose_name="защита")
     stamina = models.PositiveSmallIntegerField(verbose_name="стамина")
+    def __str__(self):
+        return f'Дата появления: {self.appeared_date}, дата исчезновения: {self.disappered_data}, широта: {self.lat}, долгота: {self.lon}'
