@@ -6,6 +6,8 @@ from django.shortcuts import render
 from .models import Pokemon, PokemonEntity
 from django.utils.timezone import localtime, now
 import datetime
+from datetime import date
+
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -31,9 +33,8 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
 
 def show_all_pokemons(request):    
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    tomorrow_day = localtime(now()).date()+datetime.timedelta(days=1)
-    today_day=localtime(now()).date()
-    pokemons = PokemonEntity.objects.filter(disappered_data__gte=tomorrow_day, appeared_date__gte=today_day)
+    today_day=date.today()
+    pokemons = PokemonEntity.objects.filter(disappered_data__gte=today_day+datetime.timedelta(days=1), appeared_date__gte=today_day)
     for pokemon_entity in pokemons:
         add_pokemon(
             folium_map, pokemon_entity.lat,
