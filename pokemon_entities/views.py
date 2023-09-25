@@ -68,7 +68,7 @@ def show_pokemon(request, pokemon_id):
 
     previous_pokemon = requested_pokemon.pokemon.previous_evolution
     previous_pokemon_dict = {}
-    if previous_pokemon != None:
+    if previous_pokemon:
         previous_pokemon_dict = {
              'pokemon_id': previous_pokemon.id,
             'title_ru': previous_pokemon.title_ru,  
@@ -78,7 +78,7 @@ def show_pokemon(request, pokemon_id):
     next_pokemon = next(iter(requested_pokemon.pokemon.poks.all()))
    
     next_pokemon_dict = {}
-    if next_pokemon != None:
+    if next_pokemon:
         next_pokemon_dict = {
             'pokemon_id': next_pokemon.id,
             'title_ru': next_pokemon.title_ru,  
