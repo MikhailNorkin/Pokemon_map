@@ -34,6 +34,7 @@ def show_all_pokemons(request):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     today_day=date.today()
     pokemons = PokemonEntity.objects.filter(disappered_data__gte=today_day+datetime.timedelta(days=1), appeared_date__gte=today_day)
+    # pokemons = PokemonEntity.objects.all()
     for pokemon_entity in pokemons:
         add_pokemon(
             folium_map, pokemon_entity.lat,
